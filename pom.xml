@@ -15,29 +15,45 @@
     </properties>
 
     <build>
+        <finalName>github-scrapper</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.1.0</version>
                 <configuration>
                     <archive>
                         <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>libs/</classpathPrefix>
                             <mainClass>org.repylot.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <mainClass>org.repylot.Main</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.0</version>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/libs
+                            </outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
