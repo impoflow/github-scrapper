@@ -9,8 +9,8 @@ jobs:
   archtype:
     runs-on: ubuntu-22.04
     steps:
-    - name: ls
-      run: cd ../..
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Build Docker Image
       run: docker build -t github-scrapper . 
