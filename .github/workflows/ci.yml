@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: ls
-      run: ls
+      run: cd ../..
 
     - name: Build Docker Image
       run: docker build -t github-scrapper . 
