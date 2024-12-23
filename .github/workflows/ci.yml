@@ -9,6 +9,9 @@ jobs:
   archtype:
     runs-on: ubuntu-22.04
     steps:
+    - name: ls
+      run: ls
+
     - name: Build Docker Image
       run: docker build -t github-scrapper . 
 
