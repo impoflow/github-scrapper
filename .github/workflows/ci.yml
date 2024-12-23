@@ -1,0 +1,22 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  archtype:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Build Docker Image
+      run: docker build -t github-scrapper . 
+
+    - name: Create datalake
+      run: mkdir datalake
+
+    - name: Run Docker Container
+      run:  docker run --name github-scrapper -v $(pwd)/datalake:/app/datalake github-scrapper
+
+    - name: View Docker Logs
+      run: docker logs github-scrapper
