@@ -25,7 +25,7 @@ jobs:
       run: mkdir datalake
 
     - name: Run Docker Container
-      run:  docker run -d --name github-scrapper -v $(pwd)/datalake:/app/datalake $${{ secrets.DOCKER_USERNAME }}/github-scrapper
+      run:  docker run -d --name github-scrapper -v $(pwd)/datalake:/app/datalake ${{ secrets.DOCKER_USERNAME }}/github-scrapper
 
     - name: View Docker Logs
       run: docker logs github-scrapper
