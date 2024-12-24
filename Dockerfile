@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-VOLUME ["/app/datalake"]
-
 RUN mvn clean package
 
 CMD ["java", "-jar", "target/github-scrapper.jar"]

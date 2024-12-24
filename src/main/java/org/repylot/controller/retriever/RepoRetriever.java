@@ -2,6 +2,7 @@ package org.repylot.controller.retriever;
 
 import org.repylot.controller.datalake.DataLakeWriter;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
