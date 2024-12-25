@@ -29,3 +29,6 @@ jobs:
 
       - name: View Docker Logs
         run: docker logs github-scrapper
+
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/github-scrapper:latest

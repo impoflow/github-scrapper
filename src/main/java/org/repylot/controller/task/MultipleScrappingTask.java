@@ -44,6 +44,7 @@ public class MultipleScrappingTask extends TimerTask {
             return crawler.getSubUrls(url + page);
 
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             return new ArrayList<>();
         }
     }
