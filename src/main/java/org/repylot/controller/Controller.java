@@ -29,7 +29,7 @@ public class Controller {
                         new RepoCrawler(),
                         new RepoRetriever(writer),
                         "https://github.com/search?q=%23java&type=repositories%3Fp%3D2&p="
-                ), 0, 2000);
+                ), 0, 10000);
     }
 
     public static List<User> getUsers() {

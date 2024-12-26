@@ -28,7 +28,6 @@ public class MultipleScrappingTask extends TimerTask {
             System.out.println(url);
             retrieve(url);
         }
-        sleep();
     }
 
 
@@ -48,14 +47,6 @@ public class MultipleScrappingTask extends TimerTask {
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return new ArrayList<>();
-        }
-    }
-
-    public void sleep() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 }
