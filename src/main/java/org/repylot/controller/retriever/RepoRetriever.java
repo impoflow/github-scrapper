@@ -4,6 +4,7 @@ import org.repylot.Model.Project;
 import org.repylot.Model.User;
 import org.repylot.controller.Controller;
 import org.repylot.controller.datalake.DataLakeWriter;
+import org.repylot.controller.datalake.FileDataLakeWriter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -41,7 +42,10 @@ public class RepoRetriever implements Retriever {
         System.out.println(project);
 
         InputStream inputStream = connection.getInputStream();
-        writer.save(inputStream, project.owner.name + '/' + project.path);
+        byte[] fileBytes = inputStream.readAllBytes();
+
+        InputStream inputStreamZip = new ByteArrayInputStream(fileBytes);
+        writer.save(inputStreamZip, project.owner.name + '/' + project.path);
 
         InputStream projectInfoStream = new ByteArrayInputStream(project.toString().getBytes(StandardCharsets.UTF_8));
         writer.save(projectInfoStream, project.owner.name + '/' + project.name + ".info");
