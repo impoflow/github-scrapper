@@ -36,7 +36,7 @@ public class MultipleScrappingTask extends TimerTask {
         try {
             retriever.retrieve(url);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Exception saving " + url + " to Data Lake");
         }
     }
 

@@ -1,12 +1,19 @@
 package org.repylot.controller.retriever;
 
+import org.repylot.Model.Project;
+import org.repylot.Model.User;
+import org.repylot.controller.Controller;
 import org.repylot.controller.datalake.DataLakeWriter;
 
-import javax.xml.crypto.Data;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class RepoRetriever implements Retriever {
     private DataLakeWriter writer;
@@ -30,14 +37,51 @@ public class RepoRetriever implements Retriever {
             throw new IOException("Failed to download file: HTTP ");
         }
 
-        InputStream inputStream = connection.getInputStream();
-        String outputFilePath = codeUrl.replace("https://github.com/", "")
-                .replace("/", "");
+        Project project = project(codeUrl);
+        System.out.println(project);
 
-        writer.save(inputStream, outputFilePath);
+        InputStream inputStream = connection.getInputStream();
+        writer.save(inputStream, project.owner.name + '/' + project.path);
+
+        InputStream projectInfoStream = new ByteArrayInputStream(project.toString().getBytes(StandardCharsets.UTF_8));
+        writer.save(projectInfoStream, project.owner.name + '/' + project.name + ".info");
 
         inputStream.close();
         connection.disconnect();
+    }
+
+    private static Project project(String codeUrl) {
+        User projectOwner = getProjectOwner();
+        String name = codeUrl.replace("https://github.com/", "")
+                .replace("/", "").replace(".zip", "");
+        String path = name + ".zip";
+        List<User> collaborators = getCollaborators(Controller.users, projectOwner);
+
+        return new Project(projectOwner, name, path, collaborators);
+    }
+
+    private static User getProjectOwner() {
+        Random random = new Random();
+        int randomIndex = random.nextInt(Controller.users.size());
+        User owner = Controller.users.get(randomIndex);
+        return owner;
+    }
+
+    public static List<User> getCollaborators(List<User> users, User chosenUser) {
+        List<User> collaborators = new ArrayList<>();
+        Random random = new Random();
+
+        double prob = random.nextDouble();
+        double collaboratorProb = random.nextDouble()*0.1;
+
+        if (prob > 0.5)
+            for (User user : users) {
+                if (!user.name.equals(chosenUser.name) &&  random.nextDouble() < collaboratorProb) {
+                    collaborators.add(user);
+                }
+            }
+
+        return collaborators;
     }
 
 }
