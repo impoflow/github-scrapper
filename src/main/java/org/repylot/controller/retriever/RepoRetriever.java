@@ -41,16 +41,20 @@ public class RepoRetriever implements Retriever {
         Project project = project(codeUrl);
         System.out.println(project);
 
-        InputStream inputStream = connection.getInputStream();
-        byte[] fileBytes = inputStream.readAllBytes();
+        try {
+            InputStream inputStream = connection.getInputStream();
+            byte[] fileBytes = inputStream.readAllBytes();
 
-        InputStream inputStreamZip = new ByteArrayInputStream(fileBytes);
-        writer.save(inputStreamZip, project.owner.name + '/' + project.path);
-        inputStreamZip.close();
+            InputStream inputStreamZip = new ByteArrayInputStream(fileBytes);
+            writer.save(inputStreamZip, project.owner.name + '/' + project.path);
+            inputStreamZip.close();
 
-        InputStream projectInfoStream = new ByteArrayInputStream(project.toString().getBytes(StandardCharsets.UTF_8));
-        writer.save(projectInfoStream, project.owner.name + '/' + project.name + ".info");
-        inputStream.close();
+            InputStream projectInfoStream = new ByteArrayInputStream(project.toString().getBytes(StandardCharsets.UTF_8));
+            writer.save(projectInfoStream, project.owner.name + '/' + project.name + ".info");
+            inputStream.close();
+        } catch (OutOfMemoryError e) {
+            System.gc();
+        }
 
         connection.disconnect();
     }
