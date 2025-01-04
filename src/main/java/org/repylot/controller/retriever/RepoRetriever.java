@@ -1,7 +1,7 @@
 package org.repylot.controller.retriever;
 
-import org.repylot.Model.Project;
-import org.repylot.Model.User;
+import org.repylot.model.Project;
+import org.repylot.model.User;
 import org.repylot.controller.Controller;
 import org.repylot.controller.datalake.DataLakeWriter;
 
@@ -44,13 +44,15 @@ public class RepoRetriever implements Retriever {
             if (hasSrcDirectory) {
                 System.out.println("ZIP file contains src directory. Saving project...");
 
+                System.out.println(project.toString());
+
                 InputStream inputStreamZip = new ByteArrayInputStream(fileBytes);
                 writer.save(inputStreamZip, project.owner.name + '/' + project.path);
                 inputStreamZip.close();
 
                 InputStream projectInfoStream = new ByteArrayInputStream(
                         project.toString().getBytes(StandardCharsets.UTF_8));
-                writer.save(projectInfoStream, project.owner.name + '/' + project.name + ".info");
+                writer.save(projectInfoStream, project.owner.name + '/' + project.name + ".json");
             } else {
                 System.out.println("ZIP file doesn't contain src directory. Project not saved.");
             }

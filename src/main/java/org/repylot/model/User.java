@@ -1,4 +1,4 @@
-package org.repylot.Model;
+package org.repylot.model;
 
 public class User {
     public final String name;

@@ -1,6 +1,7 @@
 package org.repylot.controller;
 
-import org.repylot.Model.User;
+import org.repylot.controller.datalake.FileDataLakeWriter;
+import org.repylot.model.User;
 import org.repylot.controller.datalake.AmazonS3Writer;
 import org.repylot.controller.datalake.DataLakeWriter;
 import org.repylot.controller.retriever.RepoRetriever;
@@ -21,7 +22,7 @@ public class Controller {
 
         System.out.println("Bucket: " + name);
         System.out.println("Region: " + region);
-        DataLakeWriter writer = new AmazonS3Writer(name, region);
+        DataLakeWriter writer = new FileDataLakeWriter();
 
         Timer timer = new Timer();
         timer.schedule(
