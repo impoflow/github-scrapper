@@ -28,7 +28,7 @@ public class Controller {
                 new MultipleScrappingTask(
                         new RepoCrawler(),
                         new RepoRetriever(writer),
-                        "https://github.com/search?q=%23java&type=repositories%3Fp%3D2&p="
+                        "https://github.com/search?q=java+agenda&type=repositories"
                 ), 0, 10000);
     }
 
