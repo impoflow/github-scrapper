@@ -22,14 +22,14 @@ public class Controller {
 
         System.out.println("Bucket: " + name);
         System.out.println("Region: " + region);
-        DataLakeWriter writer = new AmazonS3Writer(name, region);
+        DataLakeWriter writer = new FileDataLakeWriter();
 
         Timer timer = new Timer();
         timer.schedule(
                 new MultipleScrappingTask(
                         new RepoCrawler(),
                         new RepoRetriever(writer),
-                        "https://github.com/search?q=java+agenda&type=repositories"
+                        "https://github.com/search?q=java+agenda&type=repositories&p="
                 ), 0, 10000);
     }
 

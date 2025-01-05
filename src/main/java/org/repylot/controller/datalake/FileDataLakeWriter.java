@@ -9,8 +9,15 @@ public class FileDataLakeWriter implements DataLakeWriter {
 
     @Override
     public void save(InputStream inputStream, String file) throws IOException {
-        Files.createDirectories(Paths.get(dataLakePath));
-        String outputFile = dataLakePath + File.separator + file;
+        String[] pathParts = file.split("/");
+        String currentPath = dataLakePath;
+
+        for (int i = 0; i < pathParts.length - 1; i++) {
+            currentPath += File.separator + pathParts[i];
+            Files.createDirectories(Paths.get(currentPath));
+        }
+
+        String outputFile = currentPath + File.separator + pathParts[pathParts.length - 1];
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
             byte[] buffer = new byte[4096];
@@ -20,5 +27,4 @@ public class FileDataLakeWriter implements DataLakeWriter {
             }
         }
     }
-
 }
