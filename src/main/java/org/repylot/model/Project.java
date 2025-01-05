@@ -24,9 +24,9 @@ public class Project {
         }
 
         return "{" +
-                "\"user\"= \"" + owner.name +
-                "\", \"project_name\"= \"" + name +
-                "\", collaborators= [" + String.join(", ", collaboratorNames) +
+                "\"user\": \"" + owner.name +
+                "\", \"project_name\": \"" + name +
+                "\", \"collaborators\": [" + String.join(", ", collaboratorNames) +
                 "]}";
     }
 }
