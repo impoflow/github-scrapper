@@ -22,7 +22,7 @@ public class Controller {
 
         System.out.println("Bucket: " + name);
         System.out.println("Region: " + region);
-        DataLakeWriter writer = new FileDataLakeWriter();
+        DataLakeWriter writer = new AmazonS3Writer(name, region);
 
         Timer timer = new Timer();
         timer.schedule(
