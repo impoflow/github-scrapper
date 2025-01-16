@@ -28,6 +28,11 @@ public class MultipleScrappingTask extends TimerTask {
             System.out.println(url);
             retrieve(url);
         }
+
+        if (page >= 100) {
+            System.out.println("Finished scrapping");
+            cancel();
+        }
     }
 
 

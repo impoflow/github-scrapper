@@ -19,9 +19,11 @@ public class Controller {
     public void run() {
         String name = System.getenv("BUCKET_NAME");
         String region = System.getenv("REGION");
+        String url = System.getenv("URL");
 
         System.out.println("Bucket: " + name);
         System.out.println("Region: " + region);
+        System.out.println("URL: " + url);
         DataLakeWriter writer = new AmazonS3Writer(name, region);
 
         Timer timer = new Timer();
@@ -29,7 +31,7 @@ public class Controller {
                 new MultipleScrappingTask(
                         new RepoCrawler(),
                         new RepoRetriever(writer),
-                        "https://github.com/search?q=java+agenda&type=repositories&p="
+                        url
                 ), 0, 10000);
     }
 
