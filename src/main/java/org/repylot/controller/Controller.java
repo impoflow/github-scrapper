@@ -36,7 +36,8 @@ public class Controller {
     }
 
     public static List<User> getUsers() {
-        return IntStream.range(1, 101)
+        int users = Integer.parseInt(System.getenv("USERS"));
+        return IntStream.range(1, users)
                 .mapToObj(i -> new User("User_" + i))
                 .collect(Collectors.toList());
     }
